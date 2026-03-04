@@ -32,10 +32,9 @@ public class WorkOrderCompleteTests : AcceptanceTestBase
                 Timeout = 10000 // 10 seconds
             });
 
-        await Expect(Page.GetByTestId(nameof(WorkOrderManage.Elements.Title))).ToBeDisabledAsync();
         await Expect(Page.GetByTestId(nameof(WorkOrderManage.Elements.Description)))
             .ToHaveValueAsync(expectedDescription);
-        await Expect(Page.GetByTestId(nameof(WorkOrderManage.Elements.Description))).ToBeDisabledAsync();
+        await Expect(Page.GetByTestId(nameof(WorkOrderManage.Elements.CommandButton) + "Reopen")).ToBeVisibleAsync();
         await Expect(Page.GetByTestId(nameof(WorkOrderManage.Elements.Status)))
             .ToHaveTextAsync(WorkOrderStatus.Complete.FriendlyName);
 
@@ -68,7 +67,7 @@ public class WorkOrderCompleteTests : AcceptanceTestBase
                              throw new InvalidOperationException();
         rehyratedOrder.Status.ShouldBe(WorkOrderStatus.Complete);
 
-        await Expect(Page.GetByTestId(nameof(WorkOrderManage.Elements.ReadOnlyMessage)))
-            .ToHaveTextAsync("This work order is read-only for you at this time.");
+        await Expect(Page.GetByTestId(nameof(WorkOrderManage.Elements.CommandButton) + "Reopen"))
+            .ToBeVisibleAsync();
     }
 }
